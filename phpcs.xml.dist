@@ -9,6 +9,7 @@
     <arg name="extensions" value="php"/>
     <rule ref="WordPress">
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
     </rule>
     <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
         <properties>
@@ -16,7 +17,6 @@
                 <element value="Expl"/>
                 <element value="EXPL_"/>
                 <element value="example_plugin"/>
-                <element value="example-plugin"/>
             </property>
         </properties>
     </rule>

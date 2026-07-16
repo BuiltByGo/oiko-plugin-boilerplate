@@ -13,3 +13,4 @@ vendor/
 .phpunit.result.cache
 /languages/*.mo
 /languages/*.l10n.php
+.phpunit.cache/
