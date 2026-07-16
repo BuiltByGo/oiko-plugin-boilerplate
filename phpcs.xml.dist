@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ruleset name="Oiko Plugin Boilerplate">
+    <description>WPCS ruleset for the Oiko plugin boilerplate.</description>
+    <file>.</file>
+    <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/node_modules/*</exclude-pattern>
+    <arg value="sp"/>
+    <arg name="basepath" value="."/>
+    <arg name="extensions" value="php"/>
+    <rule ref="WordPress">
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+    </rule>
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="Expl"/>
+                <element value="EXPL_"/>
+                <element value="example_plugin"/>
+                <element value="example-plugin"/>
+            </property>
+        </properties>
+    </rule>
+    <config name="minimum_supported_wp_version" value="6.7"/>
+    <config name="testVersion" value="8.3-"/>
+</ruleset>

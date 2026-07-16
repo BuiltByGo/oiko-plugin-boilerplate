@@ -9,3 +9,7 @@ vendor/
 
 # Local worktrees
 .worktrees/
+
+.phpunit.result.cache
+/languages/*.mo
+/languages/*.l10n.php
