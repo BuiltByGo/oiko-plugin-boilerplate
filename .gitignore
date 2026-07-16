@@ -6,3 +6,6 @@ vendor/
 
 # Memory MCP
 .memory/
+
+# Local worktrees
+.worktrees/
