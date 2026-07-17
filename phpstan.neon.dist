@@ -5,20 +5,18 @@ parameters:
         - example-plugin.php
     bootstrapFiles:
         - vendor/szepeviktor/phpstan-wordpress/bootstrap.php
+        - .phpstan-bootstrap.php
     ignoreErrors:
         -
             # The runtime PHP-version gate in example-plugin.php is analyzed
             # under PHPStan's own PHP version, so the `< 8.3` guard always
             # reads as dead code statically. It is live, load-bearing code
-            # for any site running an older PHP than this tool does.
+            # for any site running an older PHP than this tool does. Scoped
+            # to count: 1 so a second, genuinely-buggy always-false `if`
+            # added to this file later would fail loudly instead of being
+            # silently swallowed by this entry.
             identifier: if.alwaysFalse
             path: example-plugin.php
-        -
-            # EXPL_URL is defined via plugin_dir_url( __FILE__ ) — PHPStan's
-            # constant discovery does not reliably resolve this particular
-            # runtime-computed define, the same way it resolves EXPL_VERSION
-            # and EXPL_DIR. The constant genuinely exists at runtime.
-            identifier: constant.notFound
-            message: '#^Constant EXPL_URL not found\.$#'
+            count: 1
 includes:
     - vendor/szepeviktor/phpstan-wordpress/extension.neon

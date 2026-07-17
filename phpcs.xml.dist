@@ -4,6 +4,10 @@
     <file>.</file>
     <exclude-pattern>/vendor/*</exclude-pattern>
     <exclude-pattern>/node_modules/*</exclude-pattern>
+    <!-- Test code under tests/ doesn't ship to WordPress and isn't held
+         to WPCS's commenting/array-syntax conventions — only production
+         code under src/ and the bootstrap file are. -->
+    <exclude-pattern>/tests/*</exclude-pattern>
     <arg value="sp"/>
     <arg name="basepath" value="."/>
     <arg name="extensions" value="php"/>
