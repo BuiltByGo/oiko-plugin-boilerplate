@@ -34,7 +34,7 @@ if ( version_compare( PHP_VERSION, '8.3', '<' ) ) {
 
 require_once EXPL_DIR . 'vendor/autoload.php';
 
-register_activation_hook( __FILE__, array( \Expl\Lifecycle\Activator::class, 'activate' ) );
-register_deactivation_hook( __FILE__, array( \Expl\Lifecycle\Deactivator::class, 'deactivate' ) );
+register_activation_hook( EXPL_FILE, array( \Expl\Lifecycle\Activator::class, 'activate' ) );
+register_deactivation_hook( EXPL_FILE, array( \Expl\Lifecycle\Deactivator::class, 'deactivate' ) );
 
 add_action( 'plugins_loaded', array( \Expl\Plugin::class, 'boot' ) );
