@@ -27,7 +27,7 @@ final class Activator {
 	 * Default settings. Registered with autoload off ('' , false) —
 	 * this plugin's settings aren't needed on every request.
 	 *
-	 * @return array Default settings array.
+	 * @return array{enabled: bool} Default settings array.
 	 */
 	public static function default_settings(): array {
 		return array( 'enabled' => true );
