@@ -45,4 +45,13 @@ jobs:
       - name: Run Plugin Check
         uses: wordpress/plugin-check-action@v1
         with:
-          exclude-directories: vendor,tests
+          # This repo is a boilerplate/dev checkout, not a built plugin
+          # artifact — the actual shipped plugin is just the PHP source,
+          # assets, and languages/ directory. Everything else here is
+          # repo-level dev tooling (CI config, docs, test suite, hidden
+          # config files) that never ships in the plugin zip, so it's
+          # excluded from the scan rather than fixed to satisfy checks
+          # that don't apply to it.
+          slug: example-plugin
+          exclude-directories: vendor,tests,.github,.phpunit.cache,.superpowers
+          exclude-files: .gitignore,.wp-env.json,.phpstan-bootstrap.php,AGENTS.md,CLAUDE.md,PERFORMANCE.md,phpcs.xml.dist,phpstan.neon.dist,phpunit.xml
