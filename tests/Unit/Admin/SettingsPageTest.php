@@ -71,4 +71,54 @@ class SettingsPageTest extends TestCase {
 
 		Settings_Page::save();
 	}
+
+	public function test_save_updates_option_when_capability_and_nonce_pass(): void {
+		$_POST['enabled'] = '1';
+
+		WP_Mock::userFunction( 'current_user_can' )
+			->once()
+			->with( 'manage_options' )
+			->andReturn( true );
+
+		WP_Mock::userFunction( 'check_admin_referer' )
+			->once()
+			->with( 'example-plugin_save_settings' )
+			->andReturn( true );
+
+		WP_Mock::userFunction( 'wp_unslash' )
+			->once()
+			->with( '1' )
+			->andReturn( '1' );
+
+		WP_Mock::userFunction( 'sanitize_text_field' )
+			->once()
+			->with( '1' )
+			->andReturn( '1' );
+
+		WP_Mock::userFunction( 'update_option' )
+			->once()
+			->with( 'example-plugin_settings', array( 'enabled' => true ), false );
+
+		WP_Mock::userFunction( 'wp_get_referer' )->once()->andReturn( 'https://example.test/wp-admin/options-general.php?page=example-plugin' );
+		WP_Mock::userFunction( 'add_query_arg' )->once()->andReturn( 'https://example.test/wp-admin/options-general.php?page=example-plugin&updated=true' );
+
+		WP_Mock::userFunction( 'wp_safe_redirect' )
+			->once()
+			->andReturnUsing(
+				function () {
+					throw new \RuntimeException( 'redirect called' );
+				}
+			);
+
+		$this->expectException( \RuntimeException::class );
+		$this->expectExceptionMessage( 'redirect called' );
+
+		Settings_Page::save();
+	}
+
+	public function tearDown(): void {
+		unset( $_POST['enabled'] );
+
+		parent::tearDown();
+	}
 }
