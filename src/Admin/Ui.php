@@ -135,12 +135,16 @@ final class Ui {
 	 * @param string $name    Field name attribute.
 	 * @param string $label   Field label text.
 	 * @param bool   $checked Whether the toggle is currently on.
+	 * @param string $value   Checkbox value attribute — defaults to '1' for a
+	 *                        simple on/off field; pass a distinct value (e.g.
+	 *                        a role key) when this toggle is one of several
+	 *                        sharing the same array-notation `$name`.
 	 * @return void
 	 */
-	public static function toggle_field( string $name, string $label, bool $checked ): void {
+	public static function toggle_field( string $name, string $label, bool $checked, string $value = '1' ): void {
 		?>
 		<label class="oiko-toggle">
-			<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" value="1" <?php checked( $checked ); ?> />
+			<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" <?php checked( $checked ); ?> />
 			<span class="oiko-toggle-track"></span><?php echo esc_html( $label ); ?>
 		</label>
 		<?php

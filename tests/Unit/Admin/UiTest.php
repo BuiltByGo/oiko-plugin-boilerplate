@@ -137,6 +137,7 @@ class UiTest extends TestCase {
 		$this->assertStringContainsString( 'checked="checked"', $html );
 		$this->assertStringContainsString( 'class="oiko-toggle-track"', $html );
 		$this->assertStringContainsString( '>Enabled', $html );
+		$this->assertStringContainsString( 'value="1"', $html );
 	}
 
 	public function test_toggle_field_renders_unchecked_when_false(): void {
@@ -155,6 +156,25 @@ class UiTest extends TestCase {
 		$html = ob_get_clean();
 
 		$this->assertStringNotContainsString( 'checked="checked"', $html );
+	}
+
+	public function test_toggle_field_uses_a_custom_value_when_given(): void {
+		WP_Mock::userFunction( 'checked' )->andReturnUsing(
+			function ( $checked, $current = true, $echo = true ) {
+				$result = ( (string) $checked === (string) $current ) ? ' checked="checked"' : '';
+				if ( $echo ) {
+					echo $result;
+				}
+				return $result;
+			}
+		);
+
+		ob_start();
+		Ui::toggle_field( 'alert_roles[]', 'Administrator', true, 'administrator' );
+		$html = ob_get_clean();
+
+		$this->assertStringContainsString( 'name="alert_roles[]"', $html );
+		$this->assertStringContainsString( 'value="administrator"', $html );
 	}
 
 	public function test_primary_button_renders_a_submit_button_with_the_given_label(): void {
