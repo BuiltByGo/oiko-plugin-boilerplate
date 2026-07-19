@@ -1,0 +1,137 @@
+/**
+ * Oiko Admin UI — shared design tokens and components for every Oiko
+ * plugin's admin screens (settings pages, sections embedded in WP
+ * core's own pages like profile.php). Everything is scoped under
+ * `.oiko-admin` so nothing leaks into other plugins' screens or
+ * wp-admin's own chrome.
+ *
+ * No dark-mode variant: WordPress's own admin color schemes (Midnight,
+ * Ocean, etc.) only restyle the toolbar/sidebar, never the content
+ * area, so there is no dark content surface to design for.
+ */
+
+.oiko-admin {
+	--oiko-accent: #2e6e5c;
+	--oiko-accent-ink: #1d4438;
+}
+
+.oiko-admin .oiko-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.oiko-admin .oiko-mark {
+	color: var(--oiko-accent);
+	flex: none;
+}
+
+.oiko-admin .oiko-card {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-left: 3px solid var(--oiko-accent);
+	border-radius: 4px;
+	padding: 18px 20px;
+	margin-bottom: 16px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+}
+
+.oiko-admin .oiko-card h2 {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--oiko-accent);
+	margin: 0 0 14px;
+	padding: 0;
+}
+
+.oiko-admin .oiko-field {
+	margin-bottom: 14px;
+}
+
+.oiko-admin .oiko-field label {
+	display: block;
+	font-size: 12.5px;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+
+.oiko-admin .oiko-field input[type="text"],
+.oiko-admin .oiko-field input[type="password"],
+.oiko-admin .oiko-field select {
+	width: 100%;
+	max-width: 400px;
+	box-sizing: border-box;
+	padding: 8px 10px;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+	font-size: 13px;
+}
+
+.oiko-admin .oiko-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.oiko-admin .oiko-toggle input[type="checkbox"] {
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+}
+
+.oiko-admin .oiko-toggle-track {
+	position: relative;
+	width: 34px;
+	height: 18px;
+	border-radius: 999px;
+	background: #c3c4c7;
+	transition: background-color .15s ease;
+	flex: none;
+}
+
+.oiko-admin .oiko-toggle-track::before {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: #fff;
+	transition: transform .15s ease;
+}
+
+.oiko-admin .oiko-toggle input:checked + .oiko-toggle-track {
+	background: var(--oiko-accent);
+}
+
+.oiko-admin .oiko-toggle input:checked + .oiko-toggle-track::before {
+	transform: translateX(16px);
+}
+
+.oiko-admin .oiko-toggle input:focus-visible + .oiko-toggle-track {
+	outline: 2px solid var(--oiko-accent);
+	outline-offset: 2px;
+}
+
+/* !important overrides wp-admin core's own .button color rules, which
+   are more specific than a single class selector can beat cleanly. */
+.oiko-admin .oiko-btn-primary {
+	background: var(--oiko-accent) !important;
+	border-color: var(--oiko-accent) !important;
+	color: #fff !important;
+	text-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.oiko-admin .oiko-btn-primary:hover,
+.oiko-admin .oiko-btn-primary:focus {
+	background: var(--oiko-accent-ink) !important;
+	border-color: var(--oiko-accent-ink) !important;
+	color: #fff !important;
+}

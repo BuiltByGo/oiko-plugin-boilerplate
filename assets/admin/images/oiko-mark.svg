@@ -1,0 +1,6 @@
+<svg class="oiko-mark" viewBox="0 0 48 30" width="36" height="22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+	<ellipse cx="24" cy="15" rx="22" ry="13" stroke="currentColor" stroke-width="3.5"/>
+	<circle cx="24" cy="21" r="2.6" fill="currentColor"/>
+	<path d="M13 8c3 0 6 2.5 6 7s-3 7-6 7-6-3-6-7 3-7 6-7z" fill="currentColor"/>
+	<path d="M35 8c-3 0-6 2.5-6 7s3 7 6 7 6-3 6-7-3-7-6-7z" fill="currentColor"/>
+</svg>
