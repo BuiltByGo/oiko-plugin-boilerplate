@@ -19,6 +19,7 @@ class SettingsPageTest extends TestCase {
 	}
 
 	public function test_enqueue_skips_other_admin_screens(): void {
+		WP_Mock::userFunction( 'wp_enqueue_style' )->never();
 		WP_Mock::userFunction( 'wp_enqueue_script' )->never();
 
 		Settings_Page::enqueue( 'edit.php' );
@@ -26,13 +27,22 @@ class SettingsPageTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
-	public function test_enqueue_loads_deferred_script_on_its_own_screen(): void {
+	public function test_enqueue_loads_the_admin_stylesheet_and_deferred_script_on_its_own_screen(): void {
 		if ( ! defined( 'EXPL_URL' ) ) {
 			define( 'EXPL_URL', 'https://example.test/wp-content/plugins/example-plugin/' );
 		}
 		if ( ! defined( 'EXPL_VERSION' ) ) {
 			define( 'EXPL_VERSION', '0.1.0' );
 		}
+
+		WP_Mock::userFunction( 'wp_enqueue_style' )
+			->once()
+			->with(
+				'example-plugin-admin',
+				EXPL_URL . 'assets/admin/css/oiko-admin.css',
+				[],
+				EXPL_VERSION
+			);
 
 		WP_Mock::userFunction( 'wp_enqueue_script' )
 			->once()

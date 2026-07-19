@@ -53,6 +53,13 @@ final class Settings_Page {
 			return;
 		}
 
+		wp_enqueue_style(
+			'example-plugin-admin',
+			EXPL_URL . 'assets/admin/css/oiko-admin.css',
+			array(),
+			EXPL_VERSION
+		);
+
 		wp_enqueue_script(
 			'example-plugin-admin',
 			EXPL_URL . 'assets/admin/js/settings.js',
@@ -70,20 +77,19 @@ final class Settings_Page {
 	 */
 	public static function render(): void {
 		$settings = get_option( 'example-plugin_settings', array( 'enabled' => true ) );
+
+		Ui::header( __( 'Example Plugin', 'example-plugin' ) );
 		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Example Plugin', 'example-plugin' ); ?></h1>
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-				<input type="hidden" name="action" value="example_plugin_save_settings" />
-				<?php wp_nonce_field( 'example-plugin_save_settings' ); ?>
-				<label>
-					<input type="checkbox" name="enabled" value="1" <?php checked( ! empty( $settings['enabled'] ) ); ?> />
-					<?php esc_html_e( 'Enabled', 'example-plugin' ); ?>
-				</label>
-				<?php submit_button(); ?>
-			</form>
-		</div>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<input type="hidden" name="action" value="example_plugin_save_settings" />
+			<?php wp_nonce_field( 'example-plugin_save_settings' ); ?>
+			<?php Ui::card_open( __( 'General', 'example-plugin' ) ); ?>
+			<?php Ui::toggle_field( 'enabled', __( 'Enabled', 'example-plugin' ), ! empty( $settings['enabled'] ) ); ?>
+			<?php Ui::card_close(); ?>
+			<?php Ui::primary_button( __( 'Save Changes', 'example-plugin' ) ); ?>
+		</form>
 		<?php
+		Ui::footer();
 	}
 
 	/**
