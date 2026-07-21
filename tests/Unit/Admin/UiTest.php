@@ -37,6 +37,11 @@ class UiTest extends TestCase {
 		$this->assertStringContainsString( '<div class="oiko-header">', $html );
 		$this->assertStringContainsString( '<h1>Example Plugin</h1>', $html );
 		$this->assertStringContainsString( 'class="oiko-mark"', $html );
+		$this->assertStringContainsString( '<hr class="wp-header-end" />', $html );
+		// The marker must sit AFTER .oiko-header closes, not inside it —
+		// otherwise WP core's notice-repositioning JS would still anchor
+		// notices inside the flex container the marker exists to avoid.
+		$this->assertGreaterThan( strpos( $html, '</div>' ), strpos( $html, 'wp-header-end' ) );
 	}
 
 	public function test_header_escapes_the_title(): void {

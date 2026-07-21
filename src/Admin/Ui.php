@@ -22,6 +22,15 @@ final class Ui {
 	 * Open the wp-admin `.wrap`, the `.oiko-admin` token scope, and
 	 * render the header (logo mark + page title). Pair with footer().
 	 *
+	 * The `<hr class="wp-header-end">` marker right after `.oiko-header`
+	 * is load-bearing, not decorative: WordPress core's own admin JS
+	 * (`common.js`) repositions every `.notice`/`.updated`/`.error` box
+	 * to right after this exact marker if present — falling back to
+	 * right after the page's first `<h1>` otherwise. Without the marker,
+	 * core inserts notices right after OUR `<h1>`, which sits inside the
+	 * flex `.oiko-header` container, so the notices inherit its
+	 * `display: flex` and render side-by-side instead of stacked.
+	 *
 	 * @param string $title Plugin display name.
 	 * @return void
 	 */
@@ -35,6 +44,7 @@ final class Ui {
 				<?php self::render_mark(); ?>
 				<h1><?php echo esc_html( $title ); ?></h1>
 			</div>
+			<hr class="wp-header-end" />
 		<?php
 	}
 
